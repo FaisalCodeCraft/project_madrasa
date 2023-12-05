@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.ba29d646.css",
-    "main.js": "/static/js/main.51987134.js",
-    "index.html": "/index.html",
-    "main.ba29d646.css.map": "/static/css/main.ba29d646.css.map",
-    "main.51987134.js.map": "/static/js/main.51987134.js.map"
+    "main.css": "/project_madrasa/static/css/main.ba29d646.css",
+    "main.js": "/project_madrasa/static/js/main.73b93027.js",
+    "index.html": "/project_madrasa/index.html",
+    "main.ba29d646.css.map": "/project_madrasa/static/css/main.ba29d646.css.map",
+    "main.73b93027.js.map": "/project_madrasa/static/js/main.73b93027.js.map"
   },
   "entrypoints": [
     "static/css/main.ba29d646.css",
-    "static/js/main.51987134.js"
+    "static/js/main.73b93027.js"
   ]
 }
