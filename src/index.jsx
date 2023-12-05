@@ -1,7 +1,7 @@
 import React from "react";
 import App from "core/App";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 
 const root = ReactDOM.createRoot(
@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter basename="/project_madrasa">
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>
 );

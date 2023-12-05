@@ -19,7 +19,7 @@ const Routers = () => {
       <Route path={ROUTES.AUTH.SIGN_IN} element={<ManageAuth/>} />
       <Route path={ROUTES.ADMINTEACHER.TEACHERFORM} element={<TeacherForm/>} />
 
-      <Route path={'/'} element={<ManageAuth/>} />
+      <Route exact path={'/project_madrasa'} element={<ManageAuth/>} />
 
     </Routes>
   );
