@@ -12,7 +12,6 @@ import {
   IconButton,
   Pagination,
   Stack,
-  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "constant/routes";
