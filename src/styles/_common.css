@@ -1,0 +1,22 @@
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--primary);
+}
+
+.MuiTablePagination-selectLabel{
+  display: none;
+
+} 
+.MuiTablePagination-displayedRows{
+  display: none;
+} 
+/* input[type='date']:in-range::-webkit-datetime-edit-year-field,input[type='date']:in-range::-webkit-datetime-edit-month-field,input[type='date']:in-range::-webkit-datetime-edit-day-field,input[type='date']:in-range::-webkit-datetime-edit-text{  color: transparent;}  */
