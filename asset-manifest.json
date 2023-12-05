@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/project_madrasa/static/css/main.ba29d646.css",
+    "main.js": "/project_madrasa/static/js/main.51987134.js",
+    "index.html": "/project_madrasa/index.html",
+    "main.ba29d646.css.map": "/project_madrasa/static/css/main.ba29d646.css.map",
+    "main.51987134.js.map": "/project_madrasa/static/js/main.51987134.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ba29d646.css",
+    "static/js/main.51987134.js"
+  ]
+}
