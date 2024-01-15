@@ -1,22 +1,51 @@
 import AdminLayout from "components/AdminLayout";
 import { ADMINS } from "constant/content";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import AdminCard from "./components/AdminCard";
 import AdminModal from "./components/AdminModal";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "config/firerBase";
 
 
 const ManageAdmin = () => {
-
   const [adminModal, setAdminModal] = React.useState(false)
-  
+
+  const [adminData, setAdminData] = useState([])
+  const adminCollectionRef = collection(db, "admins")
+  useEffect(() => {
+
+    const getAdmins = async () => {
+      try {
+        const admins = onSnapshot(adminCollectionRef, (allAdmins) => {
+          const newAdmins = [];
+          allAdmins.forEach((newAdmin) => {
+            newAdmins.push({ ...newAdmin?.data(), id: newAdmin?.id })
+          })
+          const allgettedAdmins = [...ADMINS, ...newAdmins]
+          setAdminData(allgettedAdmins)
+          // console.log(allgettedAdmins)
+          // newAdmins.map((i)=>{
+          //   console.log(i.profileImage)
+          // })
+        })
+        return () => admins();
+      } catch (error) {
+        console.log(error, "<<<<<<<|||failed to get admins|||>>>>>>>>>>")
+      }
+    }
+    getAdmins();
+
+  }, [])
+
+
   return (
     <AdminLayout
       buttonText="Add Admin"
       buttonClick={() => setAdminModal(true)}
     >
       <Grid container columns={10} spacing={3}>
-        {ADMINS?.map((data, i) => {
+        {adminData?.map((data, i) => {
           return (
             <Grid key={i} item md={2.5} sm={5} xs={10}>
               <AdminCard data={data} />

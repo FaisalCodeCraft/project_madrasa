@@ -40,7 +40,7 @@ const TeacherForm = (props) => {
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(adminTeacherFormSchema),
+    resolver: yupResolver(isUpdate ? updateAdminTeacherFormSchema : adminTeacherFormSchema),
   });
   /*  find error in validation */
   // console.log(errors)

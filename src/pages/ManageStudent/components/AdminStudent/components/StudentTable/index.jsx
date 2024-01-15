@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { STUDENT_TABLE_DATA } from "constant/content";
 import { ArrowForward, MoreVert, Padding } from "@mui/icons-material";
 import { Divider, IconButton, Pagination, Stack, Typography } from "@mui/material";
 import EditStudentModal from "../EditStudentModal";
@@ -44,7 +43,7 @@ const StudentTable = (props) => {
             <TableRow hover key={id} >
               <TableCell>
                 <img
-                  src={studentData.profileImage}
+                  src={studentData?.profileImage}
                   alt="student logo"
                   style={{ width: "60px", height: "60px", borderRadius: "50%" }}
                 />

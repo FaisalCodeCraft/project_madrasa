@@ -1,13 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+
 import Avatar from "@mui/material/Avatar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "constant/colors";
 import { useAuthContext } from "context/authContext";

@@ -1,9 +1,14 @@
+import { auth, db } from "config/firerBase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import React from "react";
 
 const AdminContext = React.createContext();
 
 export const AuthContext = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
+
+  console.log(currentUser);
 
   const [loading, setLoading] = React.useState(true);
 
@@ -15,7 +20,7 @@ export const AuthContext = ({ children }) => {
 
   const updateUser = (updatedUser) => {
     const updatedCurrentUser = {
-      ...currentUser,  
+      ...currentUser,
       ...updatedUser,
     };
     setCurrentUser(updatedCurrentUser);
@@ -24,6 +29,35 @@ export const AuthContext = ({ children }) => {
   const signOut = () => {
     setCurrentUser(null);
   };
+
+  React.useEffect(() => {
+    const loggedInUser = onAuthStateChanged(auth, async (user) => {
+      try {
+        setLoading(true);
+        if (user) {
+          // console.log(user?.uid, "Signed In Student");
+          const docRef = doc(db, "admins", user?.uid);
+          const adminSnap = await getDoc(docRef);
+          if (adminSnap.exists) {
+            setCurrentUser(adminSnap.data());
+          } else {
+            const docRef = doc(db, "teachers", user?.uid);
+            const docSnap = await getDoc(docRef);
+            setCurrentUser(docSnap.data());
+          }
+        } else {
+          console.log("Signed out");
+          setCurrentUser(null);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    return loggedInUser;
+  }, []);
 
   return (
     <AdminContext.Provider

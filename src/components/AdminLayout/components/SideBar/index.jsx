@@ -15,6 +15,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { COLORS } from "constant/colors";
 import { useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "config/firerBase";
 
 export const SideBar = (props) => {
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
@@ -34,7 +36,14 @@ export const SideBar = (props) => {
   const isActiveTeacherURL = pathname === ROUTES.ADMIN.TEACHERS;
   const isActiveSign_inURL = pathname === ROUTES.AUTH.SIGN_IN;
 
-
+  const logout=async()=>{
+  try {
+    await signOut(auth)
+    navigate(ROUTES.AUTH.SIGN_IN)
+  } catch (error) {
+    console.log(error)
+  }
+  }
   return (
     <Drawer variant={isSmUp ? "permanent" : "temporary"} {...props}>
       <List className="MuiList-sideBar-menu">
@@ -144,7 +153,7 @@ export const SideBar = (props) => {
           <ListItemButton>
             <ListItemText
             selected={isActiveSign_inURL}
-             onClick={() => navigate(ROUTES.AUTH.SIGN_IN)}
+             onClick={logout}
              >
               Logout
             </ListItemText>

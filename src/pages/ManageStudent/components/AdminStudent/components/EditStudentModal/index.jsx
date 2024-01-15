@@ -1,14 +1,20 @@
 import { Box, Divider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import StudentModal from "../StudentModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "config/firerBase";
+import { deleteStudent } from "services/student";
 
 const EditStudentModal = (props) => {
   const { studentData } = props;
   const [studentModal, setStudentModal] = useState(false);
+  const handleDelete = async (id) => {
+    deleteStudent(id);
+  }
 
   return (
     <React.Fragment>
-      <Box 
+      <Box
         mr={3}
         sx={{
           background: "#ffffff",
@@ -37,6 +43,7 @@ const EditStudentModal = (props) => {
           py={2}
           fontSize="14px"
           fontWeight="600"
+          onClick={() => handleDelete(studentData?.id)}
           sx={{ cursor: "pointer" }}
         >
           Delete
@@ -44,8 +51,8 @@ const EditStudentModal = (props) => {
       </Box>
       {studentModal && (
         <StudentModal
-          studentData={studentData}
           isUpdate={true}
+          studentData={studentData}
           title="Update Student"
           studentModal={studentModal}
           onClose={() => setStudentModal(false)}

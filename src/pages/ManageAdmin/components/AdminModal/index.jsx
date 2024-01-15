@@ -11,17 +11,17 @@ import { useForm } from "react-hook-form";
 import { adminFormSchema, updateAdminFormSchema } from "validations";
 import { COLORS } from "constant/colors";
 import { ADMIN_ROLE } from "constant/content";
+import { createAdmin, updateAdmin } from "services/admin";
 
 
 const AdminModal = (props) => {
-  const { title, onClose, adminModal, setAddAdminModal, adminData, isUpdate } =
+  const { title, onClose, adminModal, adminData, isUpdate } =
     props || {};
 
   const [isEmailExist, setIsEmailExist] = React.useState(false);
 
-  const [admin, setAdmin] = React.useState("");
-
-  const [isSuccessModal, setIsSuccessModal] = React.useState(false);
+ 
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const {
     trigger,
@@ -39,6 +39,7 @@ const AdminModal = (props) => {
     adminData?.profileImage && adminData?.profileImage
   );
 
+
   const handleChange = (e) => {
     if (e?.target.files) {
       setValue("profileImage", e?.target?.files[0]);
@@ -52,9 +53,27 @@ const AdminModal = (props) => {
     //eslint-disable-next-line
   }, []);
 
+
+
   const formSubmitHandler = async (values) => {
-    console.log(values, ">>>>>>>>>>>>");
+    try {
+      setIsLoading(true)
+      if (isUpdate) {
+        await updateAdmin(values, adminData)
+        onClose();
+      } else {
+        await createAdmin(values)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      setIsLoading(false)
+    }
+
   };
+
+
 
   return (
     <React.Fragment>
@@ -183,7 +202,7 @@ const AdminModal = (props) => {
               />
 
               <TextField
-              defaultValue={adminData?.phoneNumber}
+                defaultValue={adminData?.phoneNumber}
                 onFocus={() => setIsEmailExist(false)}
                 placeholder="Phone No:"
                 {...register("phoneNumber")}
@@ -210,8 +229,8 @@ const AdminModal = (props) => {
                 fullWidth
                 type="submit"
                 variant="contained"
-                // loading={!!isLoading}
-                // disabled={!!isLoading}
+                loading={!!isLoading}
+                disabled={!!isLoading}
                 className={isValid ? "MuiButton-primary" : "MuiButton-light"}
                 sx={{
                   ml: 2,
@@ -219,8 +238,8 @@ const AdminModal = (props) => {
                   borderRadius: 50,
                 }}
               >
-                {adminData ? "Update Admin" : "Add Admin"}
-               
+                {isUpdate ? "Update Admin" : "Add Admin"}
+
               </LoadingButton>
             </Box>
           </Box>

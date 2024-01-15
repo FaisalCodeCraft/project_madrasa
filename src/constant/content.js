@@ -87,7 +87,7 @@ export const ADMINS = [
 
 export const STUDENT_TABLE_DATA = [
   {
-    id: 1,
+    id: 11,
     profileImage:
       "https://images.pexels.com/photos/4144923/pexels-photo-4144923.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 201,
@@ -101,7 +101,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 2,
+    id: 12,
     profileImage:
       "https://images.pexels.com/photos/4476376/pexels-photo-4476376.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 202,
@@ -114,7 +114,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 3,
+    id: 13,
     profileImage:
       "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 203,
@@ -127,7 +127,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 4,
+    id: 14,
     profileImage:
       "https://images.pexels.com/photos/3178818/pexels-photo-3178818.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 204,
@@ -141,7 +141,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 5,
+    id: 15,
     profileImage:
       "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 205,
@@ -154,7 +154,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 6,
+    id: 16,
     profileImage:
       "https://images.pexels.com/photos/4126724/pexels-photo-4126724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     rNo: 206,
@@ -168,7 +168,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 7,
+    id: 17,
     profileImage:
       "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 207,
@@ -182,7 +182,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 8,
+    id: 18,
     profileImage:
       "https://images.pexels.com/photos/614117/pexels-photo-614117.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     rNo: 208,
@@ -196,7 +196,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 9,
+    id: 19,
     profileImage:
       "https://images.pexels.com/photos/4476376/pexels-photo-4476376.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 209,
@@ -210,7 +210,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 10,
+    id: 20,
     profileImage:
       "https://images.pexels.com/photos/3589903/pexels-photo-3589903.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 210,
@@ -224,7 +224,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 11,
+    id: 21,
     profileImage:
       "https://images.pexels.com/photos/18868628/pexels-photo-18868628/free-photo-of-mugs-with-logo.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 211,
@@ -238,7 +238,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 12,
+    id: 22,
     profileImage:
       "https://images.pexels.com/photos/4855552/pexels-photo-4855552.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 212,
@@ -252,7 +252,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 13,
+    id: 23,
     profileImage:
       "https://images.pexels.com/photos/4476376/pexels-photo-4476376.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 213,
@@ -266,7 +266,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 14,
+    id: 24,
     profileImage:
       "https://images.pexels.com/photos/2922140/pexels-photo-2922140.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 214,
@@ -280,7 +280,7 @@ export const STUDENT_TABLE_DATA = [
     country: "Pakistan",
   },
   {
-    id: 15,
+    id: 25,
     profileImage:
       "https://images.pexels.com/photos/3755760/pexels-photo-3755760.jpeg?auto=compress&cs=tinysrgb&w=600",
     rNo: 215,

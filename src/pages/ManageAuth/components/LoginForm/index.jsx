@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/system/Box";
 import Paper from "@mui/material/Paper";
 import ROUTES from "constant/routes";
@@ -7,25 +7,24 @@ import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import { loginFormSchema } from "validations";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller,  } from "react-hook-form";
 import { useAuthContext } from "context/authContext";
+import { auth } from "config/firerBase";
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
 
   const context = useAuthContext();
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isError, setIsError] = React.useState(false);
+  const [isError, setIsError] = useState(false);
 
-  // React.useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate(ROUTES.COMMON.DASHBOARD);
-  //   }
-  // },)
+
+  
 
   const {
     control,
@@ -58,7 +57,7 @@ const LoginForm = (props) => {
       setIsLoading(false);
       context.updateUser({
         type: "teacher",
-        firstName: "teacher",  
+        firstName: "teacher",
         lastName: "test",
         role: "Teacher",
         email: "teacher@gmail.com",
@@ -71,7 +70,31 @@ const LoginForm = (props) => {
       setIsLoading(false);
       setIsError(true);
     }
+    navigate(ROUTES.COMMON.DASHBOARD);
+
+    const signInWithEp = async () => {
+      // e.preventDefault()
+      try {
+        await signInWithEmailAndPassword(auth, values.email, values.password)
+
+        // console.log("success")
+
+      } catch (error) {
+        console.log(error.message, "<<<<<invalid>>>>>>")
+      }
+
+    }
+    signInWithEp();
   };
+
+  const user = useAuthContext()
+
+  React.useEffect(() => { 
+    if (user) {
+      navigate(ROUTES.ADMIN.ADMINS)
+    }
+  }, [])
+
 
   return (
     <React.Fragment>
@@ -149,8 +172,14 @@ const LoginForm = (props) => {
             >
               Sign In
             </LoadingButton>
+           
+
+
           </Box>
         </form>
+        <Box>
+
+        </Box>
       </Paper>
       <Box>
         <Snackbar

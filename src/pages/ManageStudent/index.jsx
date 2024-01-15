@@ -6,9 +6,9 @@ import { useAuthContext } from 'context/authContext';
 
 const ManageStudent = (props) => {
   // const user = {type:"admin"}
-  const context=useAuthContext()
+  const context = useAuthContext()
 
-  return context?.user?.type === "admin" ? <AdminStudent /> : <TeacherStudent />;
+  return context?.user?.type === "Admin" ? <AdminStudent /> : <TeacherStudent />;
 }
 
 export default ManageStudent

@@ -13,12 +13,16 @@ import { useForm } from "react-hook-form";
 import { FILTER_BY_CLASS } from "constant/content";
 import { Container, Grid, MenuItem, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { db, storage } from "config/firerBase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { addNewStudent, updateExistingStd } from "services/student";
 
 const StudentModal = (props) => {
   const { title, onClose, studentModal, studentData, isUpdate } = props || {};
+  const [isEmailExist, setIsEmailExist] = React.useState(false)
 
-  // console.log(isUpdate);
-  const [isEmailExist, setIsEmailExist] = React.useState(false);
+
 
   const {
     trigger,
@@ -28,13 +32,16 @@ const StudentModal = (props) => {
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(isUpdate ? updateAdminStudentFormSchema: adminStudentFormSchema),
+    resolver: yupResolver(isUpdate ? updateAdminStudentFormSchema : adminStudentFormSchema),
   });
 
- 
+
   const [image, setImage] = React.useState(
     studentData?.profileImage && studentData?.profileImage
   );
+
+  const [isLoading, setIsLoading] = React.useState(false)
+
 
   const handleChange = (e) => {
     if (e?.target.files) {
@@ -42,16 +49,50 @@ const StudentModal = (props) => {
       setImage(URL.createObjectURL(e?.target?.files[0]));
       trigger("profileImage");
     }
-  };
 
+  };
   React.useEffect(() => {
     studentData && setValue("profileImage", studentData?.profileImage);
+    // image && uploadImg()
   }, []);
 
+
   const handleSumbitForm = async (data) => {
-    console.log(data, "///////////////////");
-   
+    // console.log(data, "///////////////////");
+    try {
+      setIsLoading(true);
+
+      if (isUpdate) {
+        await updateStudent(data);
+      }
+      else {
+        await addStudent(data);
+      }
+
+    } catch (error) {
+      console.log(error.message)
+    }
+
+    finally {
+      setIsLoading(false)
+    }
+    // console.log(data)
   };
+
+
+  const addStudent = async (data) => {
+    addNewStudent(data)
+
+    onClose();
+
+  };
+
+  const updateStudent = async (data) => {
+    updateExistingStd(data, studentData)
+    onClose();
+  }
+
+
   return (
     <div>
       <Modal
@@ -61,17 +102,19 @@ const StudentModal = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+
           <Container maxWidth={false}>
-    
+
             <form onSubmit={handleSubmit(handleSumbitForm)}>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
                   <Typography
-                     fontSize="20px"
+                    fontSize="20px"
                     fontWeight={800}
                     fontFamily="Mulish"
                   >
                     {title}
+
                   </Typography>
                   {/* Left side content */}
                   <Grid container spacing={3}>
@@ -100,12 +143,15 @@ const StudentModal = (props) => {
                               alt="thumbnail"
                             />
                           )}
+
                         </Box>
                         <label style={{ marginTop: "7px" }} htmlFor="img">
-                          <Box sx={uploadButton}>Upload New Photo</Box>
+                          <Box sx={uploadButton}
+                          // onClick={uploadImg}
+                          >Upload New Photo
+                          </Box>
                           <input
                             type="file"
-                            accept="image/*"
                             onChange={(e) => handleChange(e)}
                             id="img"
                             style={{ display: "none" }}
@@ -287,23 +333,23 @@ const StudentModal = (props) => {
                 </Grid>
               </Grid>
               <Box mt={5} display="flex" justifyContent="space-around">
-              <Button
-                onClick={onClose}
-                sx={{
-                  py: 2,
-                  px: 5,
-                  borderRadius: 50,
-                  color: COLORS.dark.main,
-                  background: COLORS.grey.lighter,
-                }}
-              >
-                cancel
-              </Button>
+                <Button
+                  onClick={onClose}
+                  sx={{
+                    py: 2,
+                    px: 5,
+                    borderRadius: 50,
+                    color: COLORS.dark.main,
+                    background: COLORS.grey.lighter,
+                  }}
+                >
+                  cancel
+                </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  // loading={!!isLoading}
-                  // disabled={!!isLoading}
+                  loading={!!isLoading}
+                  disabled={!!isLoading}
                   className={isValid ? "MuiButton-primary" : "MuiButton-light"}
                   sx={{
                     py: 2,
@@ -333,7 +379,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: "20px",
-   overflowY: "scroll",
+  overflowY: "scroll",
   "::-webkit-scrollbar": {
     width: "10px",
   },

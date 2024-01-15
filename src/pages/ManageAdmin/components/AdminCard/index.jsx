@@ -11,9 +11,7 @@ import MoreOptionModal from "../MoreOptionModal";
 import { COLORS } from "constant/colors";
 import { Alert, Snackbar } from "@mui/material";
 
-// type Props = {
-//   data: any;
-// };
+
 
 const AdminCard = (props) => {
   const { data } = props || {};
@@ -28,7 +26,7 @@ const AdminCard = (props) => {
       <Card
         elevation={0}
         sx={{
-          border: `1px solid ${COLORS.grey.main}`,
+          border: `2px solid ${COLORS.grey.main}`,
           backgroundColor: COLORS.grey.light,
           position: "relative",
           borderRadius: "12px",
@@ -56,7 +54,7 @@ const AdminCard = (props) => {
             height="90"
             component="img"
             alt="Profile Image"
-            image={"assets/icons/logo.jpg"}
+            image={data.profileImage}
             sx={{ width: 90, borderRadius: 50 }}
           />
           <CardContent>

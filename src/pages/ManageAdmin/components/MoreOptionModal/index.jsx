@@ -1,8 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { Divider, Typography } from "@mui/material";
+import { Button, Divider, Snackbar, Typography } from "@mui/material";
 import { COLORS } from "constant/colors";
 import AdminModal from "../AdminModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "config/firerBase";
+import ConformModal from "../ConformModal";
 
 // type Props = {
 
@@ -13,9 +16,11 @@ const MoreOptionModal = (props) => {
 
   const [adminModal, setAdminModal] = React.useState(false);
 
-  const [isConfirmModal, setIsConfirmModal] = React.useState(false);
 
-  const [isSuccessModal, setIsSuccessModal] = React.useState(false);
+
+
+
+ 
 
   return (
     <>
@@ -37,28 +42,25 @@ const MoreOptionModal = (props) => {
           fontSize="14px"
           fontWeight="600"
           onClick={() => setAdminModal(true)}
-          sx={{cursor:"pointer"}}
+          sx={{ cursor: "pointer" }}
         >
           Edit
         </Typography>
-        <Divider  />
-        <Typography
-          px={2}
-          py={2}
-          fontSize="14px"
-          fontWeight="600"
-          onClick={() => setIsConfirmModal(true)}
-          sx={{cursor:"pointer"}}
+        <Divider />
 
+        <Typography
         >
-          Delete
-        </Typography>
+
+          <ConformModal adminData={data}/>
+        </Typography >
+
+
       </Box>
 
       {adminModal && (
         <AdminModal
-          adminData={data} 
           isUpdate={true}
+          adminData={data}
           title="Update Admin"
           adminModal={adminModal}
           onClose={() => setAdminModal(false)}
