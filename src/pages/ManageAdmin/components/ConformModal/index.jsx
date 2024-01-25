@@ -29,11 +29,11 @@ const ConformModal = (props) => {
   const handleClose = () => setIsConfirmModal(false);
   const handleSnackbar = () => setIsSuccessModal(false);
 
-  
+
   const handleDelete = async () => {
     handleClose();
     deleteAdmin(adminData);
-    setIsSuccessModal(true)
+    setIsSuccessModal(true)  
     setTimeout(() => {
       setIsSuccessModal(false)
     }, 3000);
@@ -92,7 +92,12 @@ const ConformModal = (props) => {
           vertical: "top",
           horizontal: "right"
         }}>
-        <Alert onClose={handleSnackbar} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleSnackbar} severity="success"
+          sx={{
+            width: '100%',
+            bgcolor: COLORS.grey.dark,
+            color: "white"
+          }}>
           Admin has been deleted successfully!
         </Alert>
       </Snackbar>

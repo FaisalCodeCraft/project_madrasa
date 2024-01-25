@@ -5,7 +5,7 @@ import TeacherSetting from "./components/TeacherSetting";
 // type Props = {};
 
 const ManageSetting = (props) => {
-  const user = {type:'admin'}
+  const user = { type: 'admin' }
 
   return user.type === "admin" ? <AdminSetting /> : <TeacherSetting />;
 };

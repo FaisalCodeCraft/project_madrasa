@@ -22,12 +22,8 @@ const ManageAdmin = () => {
           allAdmins.forEach((newAdmin) => {
             newAdmins.push({ ...newAdmin?.data(), id: newAdmin?.id })
           })
-          const allgettedAdmins = [...ADMINS, ...newAdmins]
-          setAdminData(allgettedAdmins)
-          // console.log(allgettedAdmins)
-          // newAdmins.map((i)=>{
-          //   console.log(i.profileImage)
-          // })
+          setAdminData(newAdmins)
+          
         })
         return () => admins();
       } catch (error) {

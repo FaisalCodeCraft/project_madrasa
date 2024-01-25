@@ -11,7 +11,7 @@ import { Divider, IconButton, Pagination, Stack, Typography } from "@mui/materia
 import EditStudentModal from "../EditStudentModal";
 
 const StudentTable = (props) => {
-  const {studentData}=props
+  const { studentData } = props
   const [editStudentModal, setEditStudentModal] = React.useState(false);
   const onCurrentPage = 5;
   const [studentId, setStudentId] = React.useState("");
@@ -23,7 +23,7 @@ const StudentTable = (props) => {
   const bca = abc - onCurrentPage;
 
   return (
-    <TableContainer component={Paper}sx={{mb:4}}>
+    <TableContainer component={Paper} sx={{ mb: 4 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow  >
@@ -39,7 +39,7 @@ const StudentTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {studentData.slice(bca,abc).map((studentData, id) => (
+          {studentData.slice(bca, abc).map((studentData, id) => (
             <TableRow hover key={id} >
               <TableCell>
                 <img
@@ -60,6 +60,7 @@ const StudentTable = (props) => {
                     onClick={() => {
                       setStudentId(studentData.id);
                       setEditStudentModal(!editStudentModal);
+
                     }}
                   />
                   {editStudentModal && studentId === studentData?.id && (
@@ -74,11 +75,11 @@ const StudentTable = (props) => {
           ))}
         </TableBody>
       </Table>
-      <Divider/>
+      <Divider />
       <Stack spacing={2}>
         <Pagination
-         style={style}
-        
+          style={style}
+
           count={Math.ceil(studentData.length / onCurrentPage)}
           page={page}
           color="secondary"
@@ -90,8 +91,8 @@ const StudentTable = (props) => {
 };
 
 export default StudentTable;
-const style={
-  margin:"auto",
-  padding:"1.2em",
+const style = {
+  margin: "auto",
+  padding: "1.2em",
 }
 

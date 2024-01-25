@@ -43,6 +43,7 @@ const StudentModal = (props) => {
   const [isLoading, setIsLoading] = React.useState(false)
 
 
+
   const handleChange = (e) => {
     if (e?.target.files) {
       setValue("profileImage", e?.target?.files[0]);
@@ -57,40 +58,28 @@ const StudentModal = (props) => {
   }, []);
 
 
-  const handleSumbitForm = async (data) => {
+  const  onSubmitForm = async (data) => {
     // console.log(data, "///////////////////");
     try {
       setIsLoading(true);
 
       if (isUpdate) {
-        await updateStudent(data);
+        await updateExistingStd(data, studentData)
       }
       else {
-        await addStudent(data);
+        await addNewStudent(data)
       }
 
+      setIsLoading(false)
+      onClose()
+
     } catch (error) {
+      setIsLoading(false)
       console.log(error.message)
     }
 
-    finally {
-      setIsLoading(false)
-    }
     // console.log(data)
   };
-
-
-  const addStudent = async (data) => {
-    addNewStudent(data)
-
-    onClose();
-
-  };
-
-  const updateStudent = async (data) => {
-    updateExistingStd(data, studentData)
-    onClose();
-  }
 
 
   return (
@@ -105,7 +94,7 @@ const StudentModal = (props) => {
 
           <Container maxWidth={false}>
 
-            <form onSubmit={handleSubmit(handleSumbitForm)}>
+            <form onSubmit={handleSubmit( onSubmitForm)}>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
                   <Typography
@@ -373,6 +362,8 @@ const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
+  height: "80vh",
+  overflowY: "scroll",
   transform: "translate(-50%, -50%)",
   width: "70%",
   bgcolor: "background.paper",

@@ -3,75 +3,78 @@ import React, { useEffect, useState } from "react";
 import TopBar from "./components/TopBar";
 import StudentTable from "./components/StudentTable";
 import StudentModal from "./components/StudentModal";
-import { STUDENT_TABLE_DATA } from "constant/content";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import { db, storage } from "config/firerBase";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { Box } from "@mui/material";
+import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import { db } from "config/firerBase";
 
 
-const AdminStudent = (props) => {
+
+const AdminStudent = () => {
   const [studentModal, setStudentModal] = useState(false);
 
 
   const [search, setSearch] = useState("");
 
-  const [studentData, setStudentData] = useState([]);
-  const studentsCollectionRef = collection(db, "students")
+  const [studentData, setStudentData] = useState();
 
-  useEffect(() => {
-    const getStudents = async () => {
+  //refrences
+  const studentsCollectionRef = collection(db, "students")
+  const oldStdRef = collection(db, "stdPrevData")
+
+
+  const getStudents = async () => {
+    return new Promise(async (resolve, reject) => {
 
       try {
-        const students = onSnapshot(studentsCollectionRef, (allNewStudent) => {
-          const newStudents = []
-          allNewStudent.forEach((newStudent) => {
+        const getStudents = query(studentsCollectionRef);
+        const querySnapshot = await getDocs(getStudents);
+        const student = []
+        await Promise.all(
+          querySnapshot?.docs.map(async (docs) => {
+            if (docs?.data()?.studentOldRecord) {
+              const docRef = doc(oldStdRef, docs?.data()?.studentOldRecord);
+              const docSnap = await getDoc(docRef);
+              student.push({ ...docs.data(), id: docs?.id, ...docSnap?.data() })
+            } else {
+              student.push({ ...docs.data(), id: docs?.id })
+            }
 
-            newStudents.push({ ...newStudent.data(), id: newStudent.id })
-          });
-          const allStudents = [...STUDENT_TABLE_DATA, ...newStudents]
-          // setStudentData(allStudents) 
-          // console.log(student,'students')
-          if (search?.length >= 2) {
-            const searchedStudent = studentData.filter((e) =>
-              `${e.fullName.toLowerCase()} ${e.rNo}`.includes(
-                search.toLowerCase()
-              )
-            );
-            setStudentData(searchedStudent);
-            // console.log(searchedStudent, ">>>>>>>>>>.")
-          } else {
-            setStudentData(allStudents);
-          }
+          })
+        )
+        resolve(student)
 
-        })
-
-
-
-        // filterStudent.map((item)=>{
-        //   alert(item.profileImage,"???????????")
-        // })
-
-        return () => students()
-
-        // const allStudents = [...STUDENT_TABLE_DATA]
-        // allStudents.map((item) => {
-        //   console.log(item.profileImage, "<<<<<allllll>>>>>>")
-        // })
-
-
-
-        // setStudentData(allStudents)
       } catch (error) {
+        reject("reject")
 
         console.log(error)
         console.log(error, "faild to get student")
       }
 
+    })
+  }
 
+  useEffect(() => {
+    if (search.length >= 2) {
+      const searchedStd = studentData.filter((e) =>
+        `${e.fullName
+          .toLowerCase()} `.includes(
+            search.toLowerCase()
+          )
+      );
+      setStudentData(searchedStd);
+    } else {
+      test()
     }
-    getStudents();
-  }, [search]);
+  }, [search])
+
+  const test = async () => {
+
+    const snapStd = onSnapshot(studentsCollectionRef, async () => {
+      await getStudents().then((e) => setStudentData(e))
+    })
+
+    return () => snapStd();
+  }
+
 
 
   return (
@@ -89,13 +92,7 @@ const AdminStudent = (props) => {
       <TopBar search={search} setSearch={setSearch} />
 
       <StudentTable studentData={studentData?.length > 0 ? studentData : []} />
-      {/* <Box>
-        {
-          imageList.map((url) => {
-            return <img width={"200px"} src={url} />
-          })
-        }
-      </Box> */}
+
     </AdminLayout>
   );
 };

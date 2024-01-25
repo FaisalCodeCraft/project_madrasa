@@ -9,9 +9,14 @@ const SecureRoute = () => {
   const context = useAuthContext()
 
   if (context.isLoading === true) {
-    return <Box textAlign={"center"} >
+    return <Box
+      position={"absolute"}
+      top={"50%"}
+      left={"50%"}
+      sx={{transform:"translate(-50% , -50%)"}}
+    >
       <CircularProgress />
-    <Typography>Loading...</Typography>
+      <Typography>Loading...</Typography>
     </Box>
   }
   return context?.user ? (

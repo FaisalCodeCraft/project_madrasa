@@ -8,6 +8,7 @@ import { deleteStudent } from "services/student";
 const EditStudentModal = (props) => {
   const { studentData } = props;
   const [studentModal, setStudentModal] = useState(false);
+
   const handleDelete = async (id) => {
     deleteStudent(id);
   }

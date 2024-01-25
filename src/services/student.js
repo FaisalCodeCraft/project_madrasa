@@ -20,9 +20,7 @@ const uploadImg = async ({ image, id }) => {
   };
   try {
     await uploadBytes(imgRef, image, metaData);
-
     const URL = await getDownloadURL(imgRef);
-    console.log("uploaded successed");
     return URL;
   } catch (error) {
     alert("uploaded,Unsuccess");
@@ -92,7 +90,6 @@ export const updateExistingStd = async (data, studentData) => {
     }
   });
 };
-
 
 //delete or remove the user(student)
 export const deleteStudent = async (id) => {

@@ -7,12 +7,10 @@ import ManageTeacher from "pages/ManageTeacher";
 import ManageDashboard from "pages/ManageDashboard";
 import {  Route, Routes } from "react-router-dom";
 import TeacherForm from "pages/ManageTeacher/components/TeacherForm";
-import { useAuthContext } from "context/authContext";
 import SecureRoute from "hoc/SecureRoute";
 
 const Routers = () => {
 
-  const user = useAuthContext()
 
 
   return (

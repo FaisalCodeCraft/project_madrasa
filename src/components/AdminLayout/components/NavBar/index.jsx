@@ -16,9 +16,6 @@ const NavBar = (props) => {
   const context = useAuthContext();
 
   const user = context?.user;
-
-  const navigate = useNavigate();
-
   const [isLogout, setIsLogout] = React.useState(false);
 
   return (
@@ -43,7 +40,7 @@ const NavBar = (props) => {
             )}
             {!!title && (
               <Typography variant="h4" fontWeight={"bold"}>
-                {title}
+                {title} 
               </Typography>
             )}
             {!!buttonClick && (

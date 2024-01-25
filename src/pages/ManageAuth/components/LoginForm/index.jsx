@@ -77,7 +77,6 @@ const LoginForm = (props) => {
       try {
         await signInWithEmailAndPassword(auth, values.email, values.password)
 
-        // console.log("success")
 
       } catch (error) {
         console.log(error.message, "<<<<<invalid>>>>>>")

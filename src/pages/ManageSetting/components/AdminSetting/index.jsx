@@ -5,7 +5,7 @@ import React from "react";
 
 const AdminSetting = (props) => {
   return (
-    <AdminLayout>
+    <AdminLayout >
       <div>AdminSetting</div>
     </AdminLayout>
   );
