@@ -161,7 +161,11 @@ export const updateAdminStudentFormSchema = yup.object().shape({
   fullName: yup.string(),
   fatherName: yup.string(),
   email: yup.string().email(),
-  contactNo: yup.string().min(8).max(11),
+  contactNo: yup.string().when("$exist", {
+    is: (exist) => exist,
+    then: yup.string().min(8).max(11),
+    otherwise: yup.string().min(8).max(11),
+  }),
   city: yup.string(),
   country: yup.string(),
   status: yup.string(),
@@ -179,14 +183,23 @@ export const adminTeacherFormSchema = yup.object().shape({
   speciality: yup.string().required(),
   about: yup.string().required(),
   classAssign: yup.string().required(),
+  // attendance: yup.string().required(),
 });
 export const updateAdminTeacherFormSchema = yup.object().shape({
   fullName: yup.string(),
   profileImage: yup.mixed(),
-  contact: yup.string().min(8).max(11),
+  contact: yup.string().when("$exist", {
+    is: (exist) => exist,
+    then: yup.string().min(8).max(11),
+    otherwise: yup.string().min(8).max(11),
+  }),
   city: yup.string(),
   education: yup.string(),
   speciality: yup.string(),
   about: yup.string(),
   classAssign: yup.string(),
+});
+
+export const attendanceSchema = yup.object().shape({
+  status: yup.string().required(),
 });

@@ -70,7 +70,7 @@ const TeachersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>{teacherData.fullName}</TableCell>
-                <TableCell>{teacherData.qualification}</TableCell>
+                <TableCell>{teacherData.education}</TableCell>
                 <TableCell>{teacherData.classAssign}</TableCell>
                 <TableCell>{teacherData.contact}</TableCell>
                 <TableCell>{teacherData.city}</TableCell>
@@ -83,15 +83,19 @@ const TeachersTable = (props) => {
                       }}
                     />
                     {teacherStatus && teachersId === teacherData?.id && (
-                      <TeacherStatus  />
-                      )}
+                      <TeacherStatus />
+                    )}
                   </IconButton>
                 </TableCell>
                 <TableCell>
                   <ArrowForward
                     onClick={() =>
                       navigate(ROUTES.ADMINTEACHER.TEACHERFORM, {
-                        state: { data: teacherData },
+                        state: {
+                          data: teacherData,
+                          isUpdate: true 
+                        },
+
                       })
                     }
                     sx={{ cursor: "pointer" }}

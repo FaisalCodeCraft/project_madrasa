@@ -6,7 +6,7 @@ import { useAuthContext } from "context/authContext";
 
 const ManageDashboard = (props) => {
   const context = useAuthContext()
-  return context?.user?.type === "Admin" ? <AdminDashboard /> : <TeacherDashboard />;
+  return context?.user?.type === "Admin" ? <AdminDashboard />  : context?.user?.type === "Teacher" ? <TeacherDashboard /> : null;
 };
 
 export default ManageDashboard;

@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
 
+
 export default function BasicModal() {
     const [open, setOpen] = React.useState();
     const handleOpen = () => setOpen(true);
@@ -14,7 +15,7 @@ export default function BasicModal() {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
-
+ 
     return (
         <div>
             <Typography onClick={handleOpen}>Leave</Typography>
@@ -30,7 +31,7 @@ export default function BasicModal() {
                         consequuntur pariatur, distinctio eveniet voluptatum
                         repudiandae accusamus, aut hic ab incidunt dolorem est
                         dolore facere consectetur odio eos?</Typography>
-                    <form action="#">
+                    <form >
                         <TextField
                             required
                             type='text'

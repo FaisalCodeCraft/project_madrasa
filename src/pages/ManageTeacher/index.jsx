@@ -5,8 +5,9 @@ import TeachersTable from "./components/TeachersTable";
 import { TEACHERS_DATA_TABLE } from "constant/content";
 import TeacherTopBar from "./components/TeacherTopBar";
 import ROUTES from "constant/routes";
+import { getTeachers } from "services/teacher";
 
-const ManageTeacher = () => {
+const ManageTeacher = (props) => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -14,32 +15,38 @@ const ManageTeacher = () => {
   const [selectedClass, setSelectedClass] = useState("All Options");
   // console.log(selectedClass, ">>>>>>>>>>>.");
 
-  const [teachersData, setTeachersData] = useState(TEACHERS_DATA_TABLE);
+  const [teachersData, setTeachersData] = useState();
+  // console.log(teachersData, "<<<<<<<<<>>>>>>>>>>>.");
+
 
   useEffect(() => {
     if (search?.length >= 2) {
-      const searchedTeacher = TEACHERS_DATA_TABLE.filter((e) =>
+      const searchedTeacher = teachersData.filter((e) =>
         `${e.fullName.toLowerCase()} `.includes(search.toLowerCase())
       );
 
       setTeachersData(searchedTeacher);
     } else {
-      setTeachersData(TEACHERS_DATA_TABLE);
+      getTeachers().then((e) => setTeachersData(e))
+
     }
   }, [search]);
 
   useEffect(() => {
-    if (selectedClass) {
-      if (selectedClass === "All Options") {
-        setTeachersData(TEACHERS_DATA_TABLE);
-      } else {
-        const classAssigned = TEACHERS_DATA_TABLE.filter((e) =>
-          `${e.classAssign}`.includes(selectedClass)
-        );
-        setTeachersData(classAssigned);
-      }
-    }  
+    if (selectedClass === "All Options") {
+      getTeachers().then((e) => setTeachersData(e))
+    } else {
+      getTeachers().then((e) => {
+        const searched = e.filter((e) =>
+          e?.classAssign.includes(selectedClass));
+        // console.log(searched)
+        setTeachersData(searched)
+
+      })
+    }
+
   }, [selectedClass]);
+
 
 
   return (
@@ -53,7 +60,8 @@ const ManageTeacher = () => {
         selectedClass={selectedClass}
         setSelectedClass={setSelectedClass}
       />
-      <TeachersTable teachersData={teachersData} />
+      <TeachersTable teachersData={teachersData?.length > 0 ? teachersData : []}
+       />
     </AdminLayout>
   );
 };

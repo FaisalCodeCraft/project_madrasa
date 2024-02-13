@@ -18,19 +18,20 @@ import ROUTES from "constant/routes";
 import { useLocation, useNavigate } from "react-router-dom";
 import AdminLayout from "components/AdminLayout";
 
+import { addTeacher, updateTeacher } from "services/teacher";
+
 const TeacherForm = (props) => {
-  
-  const { title, isUpdate } = props || {};
+
+  const { title } = props || {};
   const navigate = useNavigate();
 
   const location = useLocation();
 
   const teacherData = location?.state?.data;
-  // console.log(data,'data is here')
-  // console.log(location,"?????/////")
+  const isUpdate = location?.state?.isUpdate
 
-  // console.log(isUpdate);
   const [isEmailExist, setIsEmailExist] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const {
     trigger,
@@ -42,8 +43,6 @@ const TeacherForm = (props) => {
     mode: "onChange",
     resolver: yupResolver(isUpdate ? updateAdminTeacherFormSchema : adminTeacherFormSchema),
   });
-  /*  find error in validation */
-  // console.log(errors)
 
   const [image, setImage] = React.useState(
     teacherData?.profileImage && teacherData?.profileImage
@@ -61,12 +60,29 @@ const TeacherForm = (props) => {
     teacherData && setValue("profileImage", teacherData?.profileImage);
   }, []);
 
+
   const handleSumbitForm = async (values) => {
-    console.log(values, "///////////////////");
+    try {
+      setIsLoading(true)
+      if (isUpdate) {
+        await updateTeacher(values, teacherData)
+        navigate(ROUTES.ADMIN.TEACHERS)
+      } else {
+        await addTeacher(values)
+      }
+    } catch (error) {
+      console.log(error?.message)
+    }
+    finally {
+      setIsLoading(false)
+
+    }
+
+
   };
   return (
-    <AdminLayout title="Add Teacher">
-      <form onSubmit={handleSubmit(handleSumbitForm)}>
+    <AdminLayout title="Add Teacher" >
+      <form onSubmit={handleSubmit(handleSumbitForm)} >
         <Grid container spacing={3}>
           <Grid item md={6} xs={12}>
             <Typography fontSize="20px" fontWeight={800} fontFamily="Mulish">
@@ -289,9 +305,9 @@ const TeacherForm = (props) => {
           <LoadingButton
             type="submit"
             variant="contained"
-            // loading={!!isLoading}
-            // disabled={!!isLoading}
-            className={isValid ? "MuiButton-primary" : "MuiButton-light"}
+            loading={!!isLoading}
+            disabled={!!isLoading}
+            className={isValid || isUpdate ? "MuiButton-primary" : "MuiButton-light"}
             sx={{
               py: 2,
               px: 5,
@@ -307,21 +323,7 @@ const TeacherForm = (props) => {
 };
 export default TeacherForm;
 
-const style = {
-  width: "93%",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: "20px",
-  overflowY: "scroll",
-  "::-webkit-scrollbar": {
-    width: "10px",
-  },
-  "::-webkit-scrollbar-thumb": {
-    background: COLORS.primary.main,
-    borderRadius: "8px",
-  },
-};
+
 
 const mainBox = {
   width: "240px",

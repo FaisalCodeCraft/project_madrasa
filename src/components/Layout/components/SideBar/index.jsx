@@ -14,6 +14,9 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { COLORS } from "constant/colors";
 import { useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "config/firerBase";
+import { useAuthContext } from "context/authContext";
 
 export const SideBar = (props) => {
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
@@ -21,6 +24,7 @@ export const SideBar = (props) => {
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
+  const context=useAuthContext()
 
   const isActiveDashboardURL = pathname === ROUTES.COMMON.DASHBOARD;
 
@@ -30,7 +34,15 @@ export const SideBar = (props) => {
 
   const isActiveSign_inURL = pathname === ROUTES.AUTH.SIGN_IN;
 
+  const logout = async () => {
+    try {
+      await signOut(auth)
+      context.signOut()
 
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <Drawer variant={isSmUp ? "permanent" : "temporary"} {...props}>
       <List className="MuiList-sideBar-menu">
@@ -81,8 +93,8 @@ export const SideBar = (props) => {
         </ListItem>
         <ListItem>
           <ListItemButton
-            selected={isActiveSettingURL}
-            onClick={() => navigate(ROUTES.COMMON.SETTINGS)}
+          // selected={isActiveSettingURL}
+          // onClick={() => navigate(ROUTES.COMMON.SETTINGS)}
           >
             <ListItemIcon>
               <SettingsIcon
@@ -97,11 +109,11 @@ export const SideBar = (props) => {
             <ListItemText>Settings</ListItemText>
           </ListItemButton>
         </ListItem>
-        <Divider  sx={{ mt: 4,backgroundColor:'white' }} />
+        <Divider sx={{ mt: 4, backgroundColor: 'white' }} />
         <ListItem>
           <ListItemButton
-           selected={isActiveSign_inURL}
-           onClick={() => navigate(ROUTES.AUTH.SIGN_IN)}>
+            selected={isActiveSign_inURL}
+            onClick={logout}>
             <ListItemText>
               Logout
             </ListItemText>

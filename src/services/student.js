@@ -46,7 +46,7 @@ export const addNewStudent = async (data) => {
         id: newStudent?.id,
       });
       const userDoc = doc(db, "students", newStudent?.id);
-      await updateDoc(userDoc, { profileImage: url });
+      await updateDoc(userDoc, { profileImage: url,studentId:newStudent?.id });
       resolve("New student added");
     } catch (error) {
       reject(error?.message || error?.code);
@@ -69,6 +69,7 @@ export const updateExistingStd = async (data, studentData) => {
         status: data.status ?? "",
         class: data.class ?? "",
         profileImage: data.profileImage ?? "",
+
       };
 
       if (data?.profileImage?.size) {

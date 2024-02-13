@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import TopBar from "./components/TopBar";
 import StudentTable from "./components/StudentTable";
 import StudentModal from "./components/StudentModal";
-import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "config/firerBase";
 
 
@@ -51,50 +51,53 @@ const AdminStudent = () => {
 
     })
   }
+ 
 
-  useEffect(() => {
-    if (search.length >= 2) {
-      const searchedStd = studentData.filter((e) =>
-        `${e.fullName
-          .toLowerCase()} `.includes(
-            search.toLowerCase()
-          )
-      );
-      setStudentData(searchedStd);
-    } else {
-      test()
-    }
-  }, [search])
-
-  const test = async () => {
-
-    const snapStd = onSnapshot(studentsCollectionRef, async () => {
-      await getStudents().then((e) => setStudentData(e))
-    })
-
-    return () => snapStd();
+useEffect(() => {
+  if (search.length >= 2) {
+    const searchedStd = studentData.filter((e) =>
+      `${e.fullName
+        .toLowerCase()} `.includes(
+          search.toLowerCase()
+        )
+    );
+    setStudentData(searchedStd);
+  } else {
+    test()
   }
+}, [search])
+
+const test = async () => {
+
+  const snapStd = onSnapshot(studentsCollectionRef, async () => {
+    await getStudents().then((e) => setStudentData(e))
+  })
+
+  return () => snapStd();
+}
 
 
 
-  return (
-    <AdminLayout
-      buttonText="Add Student"
-      buttonClick={() => setStudentModal(true)}
-    >
-      {studentModal && (
-        <StudentModal
-          title="Add Student"
-          studentModal={studentModal}
-          onClose={() => setStudentModal(false)}
-        />
-      )}
-      <TopBar search={search} setSearch={setSearch} />
+return (
+  <AdminLayout
+    buttonText="Add Student"
+    buttonClick={() => setStudentModal(true)}
+  >
+    {studentModal && (
+      <StudentModal
 
-      <StudentTable studentData={studentData?.length > 0 ? studentData : []} />
+        title="Add Student"
+        studentModal={studentModal}
+        onClose={() => setStudentModal(false)}
+      />
+    )}
+    <TopBar search={search} setSearch={setSearch} />
 
-    </AdminLayout>
-  );
+    <StudentTable studentData={studentData?.length > 0 ? studentData : []}
+    />
+
+  </AdminLayout>
+);
 };
 
 export default AdminStudent;

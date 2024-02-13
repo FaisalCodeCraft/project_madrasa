@@ -80,7 +80,7 @@ const NavBar = (props) => {
                 color={COLORS.black.main}
                 fontSize={{ md: 12, sm: 10, xs: 10 }}
               >
-                @{user?.firstName}
+                @{user?.fullName}
               </Typography>
             </Box>
           </Box>

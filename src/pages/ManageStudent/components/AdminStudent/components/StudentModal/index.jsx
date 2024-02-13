@@ -13,9 +13,6 @@ import { useForm } from "react-hook-form";
 import { FILTER_BY_CLASS } from "constant/content";
 import { Container, Grid, MenuItem, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { db, storage } from "config/firerBase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addNewStudent, updateExistingStd } from "services/student";
 
 const StudentModal = (props) => {

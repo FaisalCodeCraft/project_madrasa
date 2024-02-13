@@ -58,7 +58,7 @@ export  const updateAdmin = async (values,adminData) => {
       email: values.email ?? "",
       password: values.password ?? "",
       phoneNumber: values.phoneNumber ?? "",
-      profileImage: values.profileImage ?? ""
+      profileImage: values.profileImage ?? "",
     }
     if (values?.profileImage?.size) {
       const url = await uploadFile({ image: values?.profileImage, id: adminData?.id });

@@ -17,11 +17,14 @@ import { COLORS } from "constant/colors";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "config/firerBase";
+import { useAuthContext } from "context/authContext";
 
 export const SideBar = (props) => {
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { pathname } = useLocation();
+
+  const context =useAuthContext()
 
   const navigate = useNavigate();
 
@@ -39,10 +42,11 @@ export const SideBar = (props) => {
   const logout=async()=>{
   try {
     await signOut(auth)
-    navigate(ROUTES.AUTH.SIGN_IN)
+    context.signOut()
   } catch (error) {
     console.log(error)
   }
+  // console.log(context?.user,"in side bar")
   }
   return (
     <Drawer variant={isSmUp ? "permanent" : "temporary"} {...props}>

@@ -28,7 +28,7 @@ const StudentTable = (props) => {
         <TableHead>
           <TableRow  >
             <TableCell className="MuiTableCell-tableHead">Profile</TableCell>
-            <TableCell className="MuiTableCell-tableHead">Roll No:</TableCell>
+            <TableCell className="MuiTableCell-tableHead">Class</TableCell>
             <TableCell className="MuiTableCell-tableHead">Full Name</TableCell>
             <TableCell className="MuiTableCell-tableHead">F/Name</TableCell>
             <TableCell className="MuiTableCell-tableHead">Contact</TableCell>
@@ -48,7 +48,7 @@ const StudentTable = (props) => {
                   style={{ width: "60px", height: "60px", borderRadius: "50%" }}
                 />
               </TableCell>
-              <TableCell>{studentData.rNo}</TableCell>
+              <TableCell>{studentData.class}</TableCell>
               <TableCell>{studentData.fullName}</TableCell>
               <TableCell>{studentData.fatherName}</TableCell>
               <TableCell>{studentData.contactNo}</TableCell>
@@ -58,9 +58,8 @@ const StudentTable = (props) => {
                 <IconButton aria-label="settings">
                   <MoreVert
                     onClick={() => {
-                      setStudentId(studentData.id);
+                      setStudentId(studentData?.id);
                       setEditStudentModal(!editStudentModal);
-
                     }}
                   />
                   {editStudentModal && studentId === studentData?.id && (

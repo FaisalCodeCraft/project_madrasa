@@ -7,16 +7,10 @@ const AdminContext = React.createContext();
 
 export const AuthContext = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
-
-  console.log(currentUser);
-
   const [loading, setLoading] = React.useState(true);
-
-  setTimeout(() => {
-    if (loading === true) {
-      setLoading(false);
-    }
-  }, 2000);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const currentDate = new Date().toLocaleDateString().replaceAll("/", "-").toString();
+  const [oldDate, setOldDate] = React.useState(currentDate);
 
   const updateUser = (updatedUser) => {
     const updatedCurrentUser = {
@@ -28,6 +22,7 @@ export const AuthContext = ({ children }) => {
 
   const signOut = () => {
     setCurrentUser(null);
+    setIsLoggedIn(false)
   };
 
   React.useEffect(() => {
@@ -35,19 +30,24 @@ export const AuthContext = ({ children }) => {
       try {
         setLoading(true);
         if (user) {
-          // console.log(user?.uid, "Signed In Student");
           const docRef = doc(db, "admins", user?.uid);
           const adminSnap = await getDoc(docRef);
-          if (adminSnap.exists) {
+
+          if (adminSnap.exists()) {
             setCurrentUser(adminSnap.data());
+            setIsLoggedIn(true)
+
           } else {
             const docRef = doc(db, "teachers", user?.uid);
             const docSnap = await getDoc(docRef);
             setCurrentUser(docSnap.data());
+            setIsLoggedIn(true)
+
           }
         } else {
-          console.log("Signed out");
           setCurrentUser(null);
+          setIsLoggedIn(false)
+
         }
       } catch (error) {
         console.log(error);
@@ -59,6 +59,7 @@ export const AuthContext = ({ children }) => {
     return loggedInUser;
   }, []);
 
+  
   return (
     <AdminContext.Provider
       value={{
@@ -66,6 +67,9 @@ export const AuthContext = ({ children }) => {
         isLoading: loading,
         updateUser,
         signOut,
+        isLoggedIn,
+        oldDate,
+        setOldDate
       }}
     >
       {children}
